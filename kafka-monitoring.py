@@ -2,17 +2,16 @@ from kafka import KafkaConsumer
 from prometheus_client import Counter, Histogram, start_http_server
 
 # TODO: Update the Kafka topic to the movie log of your team
-# topic = 'movielogN'
+
+topic = 'movielog24'
 
 start_http_server(8765)
 
 # Metrics like Counter, Gauge, Histogram, Summaries
 # Refer https://prometheus.io/docs/concepts/metric_types/ for details of each metric
 # TODO: Define metrics to show request count. Request count is total number of requests made with a particular http status
-# REQUEST_COUNT = ?(
-#     'request_count', 'Recommendation Request Count',
-#     ['http_status']
-# )
+REQUEST_COUNT = Counter('request_count', 'Recommendation Request Count', ['http_status'])
+
 
 REQUEST_LATENCY = Histogram('request_latency_seconds', 'Request latency')
 
@@ -36,6 +35,9 @@ def main():
             # print(values) - You can print values and see how to get the status
             # status = Eg. 200,400 etc
             # REQUEST_COUNT.?(status).inc()
+            status = str(values[3].split(' ')[2])
+            print(type(status))
+            REQUEST_COUNT.labels(http_status=status).inc() #gets error AttributeError: 'tuple' object has no attribute 'labels'
 
             # Updating request latency histogram
             time_taken = float(values[-1].strip().split(" ")[0])

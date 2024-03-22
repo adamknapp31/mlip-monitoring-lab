@@ -20,6 +20,8 @@ To receive credit for this lab, show your work to the TA during recitation.
 - Establish an SSH tunnel to the Kafka broker if not already connected
     - `ssh -o ServerAliveInterval=60 -L 9092:localhost:9092 tunnel@128.2.204.215 -NTf`
 
+    - Password for Kafka tunnel: mlip-tunnel
+
 ## Background
 - Familiarize yourself with the `docker-compose.yaml` and `prometheus.yml` files.
 - `docker-compose.yaml` file contains information about all the services inside docker along with their ports. 
